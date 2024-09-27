@@ -278,7 +278,10 @@ class ModelBasedTuner(Tuner):
 
         # if we have enough new training samples
         if len(self.xs) >= self.plan_size * (self.train_ct + 1) and self.flops_max > 1e-6:
+            self.tt.start("model_train")
             self.cost_model.fit(self.xs, self.ys, self.plan_size)
+            self.tt.end("model_train")
+            self.tt.start("search")
             if self.diversity_filter_ratio:
                 candidate = self.model_optimizer.find_maximums(
                     self.cost_model, self.plan_size * self.diversity_filter_ratio, self.visited
@@ -291,6 +294,7 @@ class ModelBasedTuner(Tuner):
                 maximums = self.model_optimizer.find_maximums(
                     self.cost_model, self.plan_size, self.visited
                 )
+            self.tt.end("search")
 
             self.trials = maximums
             self.trial_pt = 0

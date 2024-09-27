@@ -26,6 +26,8 @@ from ..utils import format_si_prefix
 
 from ..env import GLOBAL_SCOPE
 
+from .timetable import TimeTable
+
 logger = logging.getLogger("autotvm")
 
 
@@ -54,6 +56,8 @@ class Tuner(object):
         self.ttl = None
         self.n_trial = None
         self.early_stopping = None
+        
+        self.tt = TimeTable()
 
     def has_next(self):
         """Whether has next untried config in the space
@@ -109,6 +113,8 @@ class Tuner(object):
         si_prefix: str
             One of tvm.autotvm.utils.SI_PREFIXES. The SI prefix to use when reporting FLOPS.
         """
+        self.tt.start("total")
+        
         measure_batch = create_measure_batch(self.task, measure_option)
         n_parallel = getattr(measure_batch, "n_parallel", 1)
         early_stopping = early_stopping or 1e9
@@ -129,8 +135,10 @@ class Tuner(object):
 
             configs = self.next_batch(min(n_parallel, n_trial - i))
 
+            self.tt.start("measure_batch")
             inputs = [MeasureInput(self.task.target, self.task, config) for config in configs]
             results = measure_batch(inputs)
+            self.tt.end("measure_batch")
 
             # keep best config
             for k, (inp, res) in enumerate(zip(inputs, results)):
@@ -193,6 +201,8 @@ class Tuner(object):
             )
         GLOBAL_SCOPE.in_tuning = False
         del measure_batch
+        self.tt.end("total")
+        self.tt.display()
 
     def reset(self):
         """reset the status of tuner"""

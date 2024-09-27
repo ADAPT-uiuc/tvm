@@ -76,7 +76,7 @@ class XGBTuner(ModelBasedTuner):
         self,
         task,
         plan_size=64,
-        feature_type="itervar",
+        feature_type="knob",
         loss_type="rank",
         num_threads=None,
         optimizer="sa",

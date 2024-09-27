@@ -289,6 +289,16 @@ def create_measure_batch(task, option):
     def measure_batch(measure_inputs):
         build_results = builder.build(measure_inputs)
         results = runner.run(measure_inputs, build_results)
+        # import random
+        # results = []
+        # for _ in range(len(measure_inputs)):
+        #     fake_measure_result = MeasureResult(
+        #         costs=[0.123, 0.456], 
+        #         error_no=MeasureErrorNo.NO_ERROR,
+        #         all_cost= random.random(),  
+        #         timestamp=0
+        #     )
+        #     results.append(fake_measure_result)
         return results
 
     measure_batch.n_parallel = builder.n_parallel
