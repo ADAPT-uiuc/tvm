@@ -6,7 +6,7 @@ from .sa_model_optimizer import SimulatedAnnealingOptimizer
 
 
 class TreeGRUTuner(ModelBasedTuner):
-    """Tuner that uses xgboost as cost model
+    """Tuner that uses TreeGRU as cost model
 
     Parameters
     ----------
