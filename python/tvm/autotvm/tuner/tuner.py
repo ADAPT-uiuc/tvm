@@ -92,6 +92,8 @@ class Tuner(object):
         results: Array of autotvm.measure.MeasureResult
             result for measurement
         """
+        
+        pass
 
     def tune(self, n_trial, measure_option, early_stopping=None, callbacks=(), si_prefix="G"):
         """Begin tuning

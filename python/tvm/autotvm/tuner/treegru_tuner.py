@@ -40,9 +40,32 @@ class TreeGRUTuner(ModelBasedTuner):
     def __init__(self, task, plan_size=64,
                  feature_type='itervar', loss_type='rank', num_threads=None,
                  optimizer='sa', diversity_filter_ratio=None, log_interval=50, rnn_params=None):
-
+        print("Using TreeGRU Tuner")
         if rnn_params is None:
             if loss_type == 'reg':
+                # rnn_params = {
+                #     # rnn setting
+                #     'cell_type': 'gru',
+                #     'voc_size': 128,
+                #     'emb_dim': 128,
+                #     'rnn_hidden_size': 128,
+                #     'decoder_hidden_size': [128],
+                #     'max_n_children': 20,
+                #     'num_mem_slots': 0,
+
+                #     # training setting
+                #     'loss_type': 'reg',
+                #     'learning_rate': 7e-4,
+                #     'wd': 1e-4,
+                #     'clip_gradient': 5.0,
+
+                #     'ctx': 'gpu',
+                #     'max_batch': 500,
+                #     'train_batch_size': 128,
+                #     'train_eval_every': 10,
+                #     'train_early_stopping': 100,
+                #     'eval_batch_size': 1024,
+                # }
                 rnn_params = {
                     # rnn setting
                     'cell_type': 'gru',
@@ -59,7 +82,7 @@ class TreeGRUTuner(ModelBasedTuner):
                     'wd': 1e-4,
                     'clip_gradient': 5.0,
 
-                    'ctx': 'gpu',
+                    'ctx': 'cpu',
                     'max_batch': 500,
                     'train_batch_size': 128,
                     'train_eval_every': 10,
@@ -67,6 +90,29 @@ class TreeGRUTuner(ModelBasedTuner):
                     'eval_batch_size': 1024,
                 }
             elif loss_type == 'rank':
+                # rnn_params = {
+                #     # rnn setting
+                #     'cell_type': 'gru',
+                #     'voc_size': 128,
+                #     'emb_dim': 128,
+                #     'rnn_hidden_size': 128,
+                #     'decoder_hidden_size': [128],
+                #     'max_n_children': 20,
+                #     'num_mem_slots': 0,
+
+                #     # training setting
+                #     'loss_type': 'rank',
+                #     'learning_rate': 7e-4,
+                #     'wd': 1e-4,
+                #     'clip_gradient': 5.0,
+
+                #     'ctx': 'gpu',
+                #     'max_batch': 500,
+                #     'train_batch_size': 128,
+                #     'train_eval_every': 10,
+                #     'train_early_stopping': 100,
+                #     'eval_batch_size': 1024,
+                # }
                 rnn_params = {
                     # rnn setting
                     'cell_type': 'gru',
@@ -83,7 +129,7 @@ class TreeGRUTuner(ModelBasedTuner):
                     'wd': 1e-4,
                     'clip_gradient': 5.0,
 
-                    'ctx': 'gpu',
+                    'ctx': 'cpu',
                     'max_batch': 500,
                     'train_batch_size': 128,
                     'train_eval_every': 10,

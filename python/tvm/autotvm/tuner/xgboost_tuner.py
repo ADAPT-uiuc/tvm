@@ -83,6 +83,7 @@ class XGBTuner(ModelBasedTuner):
         diversity_filter_ratio=None,
         log_interval=50,
     ):
+        print("Using XGBoost Tuner")
         cost_model = XGBoostCostModel(
             task,
             feature_type=feature_type,
